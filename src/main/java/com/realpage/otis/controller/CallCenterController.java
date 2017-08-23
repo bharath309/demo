@@ -17,28 +17,32 @@ import  com.realpage.otis.service.CallcenterService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/callcenter")
 public class CallCenterController {
 	
 	@Autowired
 	private CallcenterService callcenterService;
 	
-	@RequestMapping(value="/getAllCalls", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value="/callcenter/getAllCalls", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public String getAllCalls() {
 		return callcenterService.getCallcenterData(null);
 	}
 	
-	@RequestMapping(value="/{roleName}/getCallsByRole", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value="/callcenter/{roleName}/getCallsByRole", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public String getCallsByRole(@PathVariable String roleName) {
 		return callcenterService.getCallcenterData(roleName);
 	}
 	
-	@RequestMapping(value="/loginPage", method = RequestMethod.GET)
+	@RequestMapping(value="/callcenter/login", method = RequestMethod.GET)
 	public ModelAndView getLoginPage(HttpSession session){
 		System.out.println("sessionInactive" + session.getMaxInactiveInterval());
-		return new ModelAndView("loginPage");
+		return new ModelAndView("login");
+	}
+	
+	@RequestMapping(value={"/","/callcenter/landing"}, method = RequestMethod.GET)
+	public ModelAndView getLandingPage(HttpSession session){
+		return new ModelAndView("landing");
 	}
 
 }
